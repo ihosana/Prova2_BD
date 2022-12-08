@@ -7,18 +7,21 @@ ID SERIAL PRIMARY KEY,
 nome TEXT,
 data_nascimento DATE,
 endereco TEXT,
-cpf VARCHAR(14))ALL
+cpf VARCHAR(14))
+
 SELECT* FROM paciente;
 
 /*PRONTUARIO*/
 CREATE TABLE prontuario(
 ID SERIAL PRIMARY KEY,
 data_internacao DATE,
-duracao_internacao TEXT,
+duracao_internacao INT,
 motivo_internacao TEXT,
-status BOOLEAN,
+status TEXT,
 fk_paciente INT)
+
 SELECT* FROM prontuario;
+
 
 /*MEDICO*/
 CREATE TABLE Medico(
@@ -26,6 +29,7 @@ ID SERIAL PRIMARY KEY,
 nome TEXT,
 especialidade TEXT,
 crm INT)
+
 SELECT* FROM medico;
 
 /*ANOTAÇÕES PRONTUARIO*/
@@ -34,7 +38,8 @@ ID SERIAL PRIMARY KEY,
 data DATE,
 informacoes TEXT,
 fk_medico INT,
-fk_prontuario INT) 
+fk_prontuario INT)
+
 SELECT* FROM anotacaoprontuario;
 
 
@@ -57,28 +62,69 @@ INSERT INTO Paciente(nome,data_nascimento, endereco,cpf)VALUES('Juliana Pedrosa'
 
 /*INSERT PRONTUARIO*/
 INSERT INTO Prontuario(data_internacao, duracao_internacao, motivo_internacao, fk_paciente,
-status)VALUES('20/11/2021','3dias','overdose',1,'ativo');
+status)VALUES('20/11/2021',3,'overdose',1,'ativo');
 INSERT INTO Prontuario(data_internacao, duracao_internacao, motivo_internacao, fk_paciente,
-status)VALUES('23/12/2021','1dias','Manchao Pulmão',1,'ativo');
+status)VALUES('23/12/2021',1,'Manchao Pulmão',1,'ativo');
 INSERT INTO Prontuario(data_internacao, duracao_internacao, motivo_internacao, fk_paciente,
-status)VALUES('02/01/2022','2dias','cirrose',1,'ativo');
+status)VALUES('02/01/2022',2,'cirrose',1,'ativo');
 INSERT INTO Prontuario(data_internacao, duracao_internacao, motivo_internacao, fk_paciente,
-status)VALUES('10/06/2022','3dias','overdose',1,'ativo');
+status)VALUES('10/06/2022',3,'overdose',1,'ativo');
 INSERT INTO Prontuario(data_internacao, duracao_internacao, motivo_internacao, fk_paciente,
-status)VALUES('20/07/2022','6dias','overdose',1,'ativo');
+status)VALUES('20/07/2022',6,'overdose',1,'ativo');
 
 INSERT INTO Prontuario(data_internacao, duracao_internacao, motivo_internacao, fk_paciente,
-status)VALUES('2/11/2021','7dias','parada cardíaca',2,'ativo');
+status)VALUES('2/11/2021',7,'parada cardíaca',2,'ativo');
 INSERT INTO Prontuario(data_internacao, duracao_internacao, motivo_internacao, fk_paciente,
-status)VALUES('10/11/2021','3dias','gripe',3,'ativo');
+status)VALUES('10/11/2021',3,'gripe',3,'ativo');
 
+UPDATE Prontuario set data_internacao='05/10/2022' where data_internacao='2021-11-02'
 /*ANOTAÇÃO PRONTUARIO*/
 INSERT INTO AnotacaoProntuario(data,informacoes, fk_medico,fk_prontuario)VALUES('05/10/2022','Apenas um surto diabetico',1,1);
 INSERT INTO AnotacaoProntuario(data,informacoes, fk_medico,fk_prontuario)VALUES('05/10/2022','Apenas um surto diabetico',2,1);
 INSERT INTO AnotacaoProntuario(data,informacoes, fk_medico,fk_prontuario)VALUES('05/10/2022','Apenas um surto diabetico',3,1);
 INSERT INTO AnotacaoProntuario(data,informacoes, fk_medico,fk_prontuario)VALUES('05/10/2022','Apenas um surto diabetico',1,1);
 INSERT INTO AnotacaoProntuario(data,informacoes, fk_medico,fk_prontuario)VALUES('05/10/2022','Apenas um surto diabetico',3,1);
+INSERT INTO AnotacaoProntuario(data,informacoes, fk_medico,fk_prontuario)VALUES('05/10/2022','Apenas um surto diabetico',,7);
 
-INSERT INTO AnotacaoProntuario(data,informacoes, fk_medico,fk_prontuario)VALUES('05/10/2022','Apenas um surto diabetico',4,7);
+select*from medico
+/*SELECTS*/
+/*1*/UPDATE prontuario SET status='inativo' WHERE id=1;
+/*1.1*/UPDATE prontuario SET status='inativo' WHERE id=7
+/*2*/UPDATE paciente SET cpf= '01323344599' WHERE cpf='78996545';
+/*3*/DELETE FROM medico anotacaoprontuario WHERE medico.id=anotacaoprontuario.fk_medico AND  medico.id=2 ;
+Delete from medico anotacaoprontuario where id='2' and fk_medico='2'/*OBS*/
+/*4*/SELECT * FROM paciente WHERE nome LIKE '%C%'
+/*5*/SELECT nome FROM prontuario, paciente where prontuario.status='ativo' AND prontuario.fk_paciente=paciente.id;
+/*6*/SELECT nome, status FROM prontuario, paciente;
+/*7*/SELECT duracao_internacao FROM prontuario;
+
+/*8*/SELECT id FROM prontuario WHERE id = (SELECT MAX(id) FROM prontuario);SELECT id FROM prontuario WHERE id = (SELECT MIN(id) FROM prontuario);
+/*9*/SELECT duracao_internacao, nome FROM prontuario, paciente;
+/*10*/SELECT fk_prontuario, fk_medico FROM anotacaoprontuario,prontuario, medico WHERE fk_medico=medico.id AND fk_prontuario=prontuario.id;
+/*11*/SELECT *FROM  medico;
+/*12*/SELECT medico.nome,medico.id FROM medico, anotacaoprontuario WHERE medico.id!=anotacaoprontuario.fk_medico;
+/*13*/SELECT medico.nome, medico.id FROM medico, prontuario WHERE  medico.id=prontuario.fk_paciente;
+/*14*/SELECT medico.nome, medico.id FROM medico, prontuario WHERE medico.id=prontuario.id;
+/*15*/SELECT paciente.nome, paciente.id FROM paciente ORDER BY nome;
+/*16*/SELECT medico.nome from medico, anotacaoprontuario WHERE anotacaoprontuario.data='05/10/2022' AND anotacaoprontuario.fk_medico=medico.id
+select*from anotacaoprontuario
+/*17*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

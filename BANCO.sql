@@ -101,8 +101,8 @@ select*from medico
 /5/SELECT nome FROM prontuario, paciente where prontuario.status='ativo' AND prontuario.fk_paciente=paciente.id;
 /6/SELECT AVG(duracao_internacao) FROM prontuario;
 /7/SELECT AVG(duracao_internacao) FROM prontuario WHERE status='inativo';
-/8/SELECT duracao_prontuario FROM prontuario WHERE id = (SELECT MAX(duracao_prontuario) FROM prontuario);
-/8.1/SELECT duracao_prontuario  FROM prontuario WHERE id = (SELECT MIN(duracao_pruntuario) FROM prontuario);
+/8/SELECT duracao_prontuario FROM prontuario WHERE duracao_prontuario = (SELECT MAX(duracao_prontuario) FROM prontuario);
+/8.1/SELECT duracao_prontuario  FROM prontuario WHERE duracao_prontuario = (SELECT MIN(duracao_pruntuario) FROM prontuario);
 /9/SELECT duracao_internacao, nome FROM prontuario, paciente WHERE paciente.id=prontuario.id;
 /10/SELECT fk_prontuario, fk_medico FROM anotacaoprontuario,prontuario, medico WHERE fk_medico=medico.id AND fk_prontuario=prontuario.id;
 
